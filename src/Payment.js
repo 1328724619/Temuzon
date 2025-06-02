@@ -7,6 +7,8 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { NumericFormat } from "react-number-format";
 import { getBasketTotal } from "./Reducer";
 import axios from "./Axios";
+import { db } from "./firebase";
+import { doc, setDoc, collection } from "firebase/firestore";
 
 function Payment() {
   const [{ basket, user }, dispatch] = useStateValue();
@@ -28,33 +30,50 @@ function Payment() {
       const response = await axios({
         method: "post",
         //stripe expects the total in a currencies subunits
-        url: `/payments/create?total=${getBasketTotal(basket) * 100}`,
+        url: `/payments/create?total=${Math.round(
+          getBasketTotal(basket) * 100
+        )}`,
       });
       setClientSecret(response.data.clientSecret);
     };
 
-    getClientSecret();
+    // Only call getClientSecret if the basket is not empty
+    if (basket.length > 0) {
+      getClientSecret();
+    }
   }, [basket]);
+
+  console.log("THE SECRET IS >>>", clientSecret);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setProcessing(true);
 
-    const payload = await stripe
-      .confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: elements.getElement(CardElement),
-        },
-      })
-      .then(({ paymentIntent }) => {
-        // paymentIntent = payment confirmation
+    const { paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+      },
+    });
 
-        setSucceeded(true);
-        setError(null);
-        setProcessing(false);
+    // paymentIntent = payment confirmation
 
-        navigate("/orders", { replace: true });
-      });
+    await setDoc(
+      doc(collection(db, "users", user?.uid, "orders"), paymentIntent.id),
+      {
+        basket: basket,
+        amount: paymentIntent.amount,
+        created: paymentIntent.created,
+      }
+    );
+
+    setSucceeded(true);
+    setError(null);
+    setProcessing(false);
+
+    dispatch({
+      type: "EMPTY_BASKET",
+    });
+    navigate("/orders", { replace: true });
   };
 
   const handleChange = (event) => {
@@ -85,6 +104,7 @@ function Payment() {
           <div className="payment_items">
             {basket.map((item) => (
               <CheckoutProduct
+                key={item.id}
                 id={item.id}
                 title={item.title}
                 image={item.image}
@@ -99,7 +119,7 @@ function Payment() {
             <h3>Payment Methods</h3>
           </div>
           <div className="payment_details">
-            <form>
+            <form onSubmit={handleSubmit}>
               <CardElement onChange={handleChange} />
               <div className="payment_priceContainer">
                 <NumericFormat
@@ -110,10 +130,14 @@ function Payment() {
                   thousandSeparator={true}
                   prefix={"$"}
                 />
-                <button disabled={processing || disabled || succeeded}>
+                <button
+                  type="submit"
+                  disabled={processing || disabled || succeeded}
+                >
                   <span>{processing ? <p>Processing</p> : "Buy Now"}</span>
                 </button>
               </div>
+              {error && <div>{error}</div>}
             </form>
           </div>
         </div>
