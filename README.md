@@ -35,6 +35,4 @@ A full-stack Amazon clone built with React.js, featuring:
 - Shopping cart functionality
 - Checkout process
 - Responsive design for all devices
-=======
-# Temuzon
->>>>>>> origin/main
+
