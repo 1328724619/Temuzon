@@ -1,18 +1,24 @@
 .order{
     padding: 40px;
     margin: 20px 0;
-    border: 1px solid lightgray;
-    background-color: white;
+    border: 1px solid var(--neutral-200);
+    background-color: var(--neutral-50);
+    color: var(--neutral-900);
     position: relative;
+    transition: background-color var(--transition-normal), color var(--transition-normal), border-color var(--transition-normal);
 }
 
 .order_id{
     position: absolute;
     top: 40px;
     right: 20px;
+    color: var(--neutral-700);
+    transition: color var(--transition-normal);
 }
 
 .order_total{
     font-weight: 500;
     text-align: right;
+    color: var(--neutral-900);
+    transition: color var(--transition-normal);
 }

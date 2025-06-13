@@ -1,7 +1,13 @@
-.order{
-    padding: 20px 80px;
+.orders {
+  min-height: 100vh;
+  padding: 20px 80px;
+  background-color: var(--neutral-50);
+  color: var(--neutral-900);
+  transition: background-color var(--transition-normal), color var(--transition-normal);
 }
 
 .orders > h1{
     margin: 30px 0;
+    color: var(--neutral-900);
+    transition: color var(--transition-normal);
 }

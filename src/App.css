@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Light Theme Colors (Default) */
+  --primary: #2563eb;      /* Trustworthy blue */
+  --primary-dark: #1d4ed8;
+  --primary-light: #60a5fa;
+  
+  --secondary: #7c3aed;    /* Innovative purple */
+  --secondary-dark: #6d28d9;
+  --secondary-light: #a78bfa;
+  
+  --accent: #06b6d4;       /* Fresh cyan */
+  --accent-dark: #0891b2;
+  --accent-light: #22d3ee;
+  
+  --neutral-50: #f8fafc; /* light background */
+  --neutral-100: #f1f5f9;
+  --neutral-200: #e2e8f0;
+  --neutral-300: #cbd5e1;
+  --neutral-400: #94a3b8;
+  --neutral-500: #64748b;
+  --neutral-600: #475569;
+  --neutral-700: #334155;
+  --neutral-800: #1e293b;
+  --neutral-900: #0f172a; /* dark text/background */
+
+  --success: #22c55e;
+  --warning: #facc15;
+  --error: #ef4444;
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  --gradient-accent: linear-gradient(135deg, var(--accent) 0%, var(--primary-light) 100%);
+  --gradient-dark: linear-gradient(135deg, var(--neutral-800) 0%, var(--neutral-900) 100%);
+  
+  /* Typography */
+  --font-primary: 'Space Grotesk', sans-serif;
+  --font-secondary: 'Inter', sans-serif;
+  
+  /* Spacing System */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  
+  /* Border Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+  
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark-mode {
+  /* Dark Theme Colors */
+  --primary: #4f46e5;
+  --primary-dark: #3730a3;
+  --primary-light: #818cf8;
+
+  --secondary: #a855f7;
+  --secondary-dark: #9333ea;
+  --secondary-light: #c084fc;
+
+  --accent: #06b6d4;
+  --accent-dark: #0891b2;
+  --accent-light: #22d3ee;
+
+  --neutral-50: #0f172a;
+  --neutral-100: #1e293b;
+  --neutral-200: #334155;
+  --neutral-300: #475569;
+  --neutral-400: #64748b;
+  --neutral-500: #94a3b8;
+  --neutral-600: #cbd5e1;
+  --neutral-700: #e2e8f0;
+  --neutral-800: #f1f5f9;
+  --neutral-900: #f8fafc;
+
+  --success: #4ade80;
+  --warning: #fcd34d;
+  --error: #f87171;
+
+  --gradient-dark: linear-gradient(135deg, var(--neutral-100) 0%, var(--neutral-50) 100%);
+}
+
+body {
+  font-family: var(--font-secondary);
+  color: var(--neutral-900);
+  background-color: var(--neutral-50);
+  line-height: 1.5;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+.app.menu-open body {
+  overflow: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--neutral-900);
+  transition: color var(--transition-normal);
+}
+
+.app {
+  transition: margin-left var(--transition-normal) ease-in-out;
+}
+
+.app.menu-open {
+  /* margin-left: 300px; Removed to prevent shifting */
+  height: 100vh; /* Lock height to viewport */
+  overflow: hidden; /* Prevent scrolling within .app */
+}
+
+.app.menu-open html,
+.app.menu-open body {
+  overflow: hidden;
+}
+
+/* Add responsive adjustments if needed */
+@media (max-width: 768px) {
+  .app.menu-open {
+    margin-left: 0; /* Ensure no shifting on smaller screens as well */
+  }
+}
