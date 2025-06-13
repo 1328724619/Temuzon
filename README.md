@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Amazon Clone
 
 A full-stack Amazon clone built with React.js, featuring:
